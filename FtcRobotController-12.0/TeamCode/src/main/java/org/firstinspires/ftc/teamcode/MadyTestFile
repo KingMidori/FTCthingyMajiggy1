@@ -1,0 +1,59 @@
+package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.robotcontroller.external.samples;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
+
+@TeleOp(name = "MadyTest")
+public class MadyTest extends LinearOpMode {
+
+//  GoBildaPinpointDriver pinpoint;
+
+  private DcMotor flyWheel;
+  private DcMotor frontLeft;
+  private DcMotor backLeft;
+  private DcMotor frontRight;
+  private DcMotor backRight;
+
+  @Override
+  public void runOpMode() {
+//    pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+//    pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_Bar_Pods);
+//    pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+    double Strafe = 0;
+    float Drive = 0;
+    float Rotate = 0;
+
+    frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+    backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+    frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+    backRight = hardwareMap.get(DcMotor.class, "backRight");
+    flyWheel = hardwareMap.get(DcMotor.class, "flyWheel");
+
+    waitForStart();
+    if (opModeIsActive()) {
+      while (opModeIsActive()) {
+ //       pinpoint.update();
+ //       Pose2D pos = pinpoint.getPosition();
+        frontLeft.setPower(Strafe * 1 + Drive * 1 + Rotate * 1);
+        backLeft.setPower(Strafe * 1 + Drive * 1 + Rotate * -1);
+        frontRight.setPower(Strafe * 1 + Drive * -1 + Rotate * 1);
+        backRight.setPower(Strafe * 1 + Drive * -1 + Rotate * -1);
+        Drive = gamepad1.left_stick_y * 1;
+        Rotate = gamepad1.left_stick_x * 1;
+        Strafe = gamepad1.right_stick_x * 1;
+         if (gamepad1.dpad_up) {
+          flyWheel.setPower(1);
+        }
+        if (gamepad1.dpad_down) {
+          flyWheel.setPower(-0.01);
+        }
+      }
+    }
+  }
+}
+
